@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seblak Prasmanan</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      background: linear-gradient(180deg, #5b0000 0%, #a50000 100%);
+      background-size: cover;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #ffe600;
+      text-shadow: 1px 1px 3px #000;
+    }
+    .section { margin-bottom: 20px; }
+    .options { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .option {
+      flex: 1 1 30%;
+      padding: 10px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .option.active { border-color: #ffe600; }
+    .level-img { width: 100%; max-width: 400px; margin: 10px auto; display: block; }
+    .topping-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
+    .topping {
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 5px;
+      text-align: center;
+    }
+    .topping img { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; }
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+      color: #ffe600;
+    }
+    button {
+      background: #ffe600;
+      color: #a50000;
+      border: none;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      width: 100%;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Seblak Prasmanan</h1>
+
+    <div class="section">
+      <h2>1. Pilih Jenis Kuah</h2>
+      <div class="options" id="kuahOptions">
+        <div class="option">Seblak</div>
+        <div class="option">Asam Manis</div>
+        <div class="option">Tomyum</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>2. Pilih Tipe Kuah</h2>
+      <div class="options" id="tipeOptions">
+        <div class="option">Nyemek</div>
+        <div class="option">Campur</div>
+        <div class="option">Pisah</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. Pilih Level Pedas</h2>
+      <div class="options" id="levelOptions">
+        <div class="option">1</div>
+        <div class="option">2</div>
+        <div class="option">3</div>
+        <div class="option">4</div>
+        <div class="option">5</div>
+        <div class="option">6</div>
+        <div class="option">7</div>
+      </div>
+      <img src="https://i.imgur.com/3y8QqfO.png" class="level-img" alt="Ilustrasi Level Pedas">
+    </div>
+
+    <div class="section">
+      <h2>4. Pilih Topping</h2>
+      <div class="topping-grid" id="toppingGrid"></div>
+    </div>
+
+    <div class="total" id="total">Total: Rp0</div>
+    <button onclick="kirimWhatsApp()">Pesan via WhatsApp</button>
+  </div>
+
+  <script>
+    const kuahOptions = document.querySelectorAll("#kuahOptions .option");
+    const tipeOptions = document.querySelectorAll("#tipeOptions .option");
+    const levelOptions = document.querySelectorAll("#levelOptions .option");
+
+    let selectedKuah = "", selectedTipe = "", selectedLevel = "";
+
+    kuahOptions.forEach(opt => opt.onclick = () => selectOption(kuahOptions, opt, v => selectedKuah = v));
+    tipeOptions.forEach(opt => opt.onclick = () => selectOption(tipeOptions, opt, v => selectedTipe = v));
+    levelOptions.forEach(opt => opt.onclick = () => selectOption(levelOptions, opt, v => selectedLevel = v));
+
+    function selectOption(all, el, setter) {
+      all.forEach(o => o.classList.remove("active"));
+      el.classList.add("active");
+      setter(el.textContent);
+    }
+
+    const toppings = [
+      { name: "Pentol", price: 3000, img: "https://i.imgur.com/CkPXqbh.jpg" },
+      { name: "Sosis", price: 4000, img: "https://i.imgur.com/IlDPsZk.jpg" },
+      { name: "Chikuwa", price: 5000, img: "https://i.imgur.com/4mjEXEf.jpg" },
+      { name: "Dumpling Keju", price: 6000, img: "https://i.imgur.com/mpt7UNz.jpg" },
+      { name: "Sosis Jumbo", price: 7000, img: "https://i.imgur.com/DUpBQEV.jpg" }
+    ];
+
+    const toppingGrid = document.getElementById("toppingGrid");
+    const totalDiv = document.getElementById("total");
+    const cart = {};
+
+    toppings.forEach((t, i) => {
+      const div = document.createElement("div");
+      div.className = "topping";
+      div.innerHTML = `
+        <img src="${t.img}" alt="${t.name}">
+        <div><strong>${t.name}</strong></div>
+        <div>Rp${t.price.toLocaleString()}</div>
+        <input type="number" min="0" value="0" data-index="${i}" style="width:60px; margin-top:5px"/>
+      `;
+      toppingGrid.appendChild(div);
+    });
+
+    toppingGrid.addEventListener("input", () => {
+      let total = 0;
+      toppings.forEach((t, i) => {
+        const qty = parseInt(document.querySelector(`[data-index="${i}"]`).value) || 0;
+        cart[t.name] = qty;
+        total += t.price * qty;
+      });
+      totalDiv.textContent = `Total: Rp${total.toLocaleString()}`;
+    });
+
+    function kirimWhatsApp() {
+      let pesan = `Halo! Saya ingin pesan Seblak:\n`;
+      pesan += `• Kuah: ${selectedKuah || "-"}\n`;
+      pesan += `• Tipe: ${selectedTipe || "-"}\n`;
+      pesan += `• Level: ${selectedLevel || "-"}\n`;
+      pesan += `• Topping:\n`;
+      toppings.forEach((t, i) => {
+        const qty = cart[t.name];
+        if (qty > 0) pesan += `  - ${t.name} x ${qty} (Rp${t.price * qty})\n`;
+      });
+      pesan += totalDiv.textContent;
+
+      const url = `https://wa.me/6282131472101?text=${encodeURIComponent(pesan)}`;
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+</html>
