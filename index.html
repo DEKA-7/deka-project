@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seblak Prasmanan</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      background: linear-gradient(180deg, #5b0000 0%, #a50000 100%);
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #ffe600;
+      text-shadow: 1px 1px 3px #000;
+    }
+    .section { margin-bottom: 20px; }
+    .options { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .option {
+      flex: 1 1 30%;
+      padding: 10px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .option.active { border-color: #ffe600; }
+    .level-img { width: 100%; max-width: 400px; margin: 10px auto; display: block; }
+    .item-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
+    .item {
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .item img { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; margin-bottom: 5px; }
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+      color: #ffe600;
+    }
+    button {
+      background: #ffe600;
+      color: #a50000;
+      border: none;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      width: 100%;
+    }
+    .quantity-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .quantity-value {
+      margin: 0 10px;
+      min-width: 20px;
+      text-align: center;
+    }
+    .item-price {
+      font-weight: bold;
+      margin: 5px 0;
+    }
+    .item-name {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Seblak Prasmanan</h1>
+
+    <div class="section">
+      <h2>1. Pilih Jenis Kuah</h2>
+      <div class="options" id="kuahOptions">
+        <div class="option">Seblak</div>
+        <div class="option">Asam Manis</div>
+        <div class="option">Tomyum</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>2. Pilih Tipe Kuah</h2>
+      <div class="options" id="tipeOptions">
+        <div class="option">Nyemek</div>
+        <div class="option">Campur</div>
+        <div class="option">Pisah</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. Pilih Level Pedas</h2>
+      <div class="options" id="levelOptions">
+        <div class="option">1</div>
+        <div class="option">2</div>
+        <div class="option">3</div>
+        <div class="option">4</div>
+        <div class="option">5</div>
+        <div class="option">6</div>
+        <div class="option">7</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>4. Pilih Sayuran</h2>
+      <div class="item-grid" id="sayurGrid"></div>
+    </div>
+
+    <div class="section">
+      <h2>5. Pilih Kerupuk</h2>
+      <div class="item-grid" id="kerupukGrid"></div>
+    </div>
+
+    <div class="section">
+      <h2>6. Pilih Topping</h2>
+      <div class="item-grid" id="toppingGrid"></div>
+    </div>
+
+    <div class="total" id="total">Total: Rp0</div>
+    <button onclick="kirimWhatsApp()">Pesan via WhatsApp</button>
+  </div>
+
+  <script>
+    const kuahOptions = document.querySelectorAll("#kuahOptions .option");
+    const tipeOptions = document.querySelectorAll("#tipeOptions .option");
+    const levelOptions = document.querySelectorAll("#levelOptions .option");
+
+    let selectedKuah = "", selectedTipe = "", selectedLevel = "";
+
+    kuahOptions.forEach(opt => opt.onclick = () => selectOption(kuahOptions, opt, v => selectedKuah = v));
+    tipeOptions.forEach(opt => opt.onclick = () => selectOption(tipeOptions, opt, v => selectedTipe = v));
+    levelOptions.forEach(opt => opt.onclick = () => selectOption(levelOptions, opt, v => selectedLevel = v));
+
+    function selectOption(all, el, setter) {
+      all.forEach(o => o.classList.remove("active"));
+      el.classList.add("active");
+      setter(el.textContent);
+    }
+
+    // Sayuran
+    const sayuran = [
+      { name: "Sawi Hijau", price: 2000, img: "https://i.imgur.com/JY7ZQ8a.jpg" },
+      { name: "Sawi Putih", price: 2000, img: "https://i.imgur.com/Km3VX9T.jpg" },
+      { name: "Mix Sayur", price: 2000, img: "https://i.imgur.com/Lp4N2Qx.jpg" }
+    ];
+
+    // Kerupuk
+    const kerupuk = [
+      { name: "Kerupuk Mawar", price: 2000, img: "https://i.imgur.com/M9R7Y2v.jpg" },
+      { name: "Kerupuk Udang", price: 2000, img: "https://i.imgur.com/N3P4Q5W.jpg" },
+      { name: "Kerupuk Bawang", price: 2000, img: "https://i.imgur.com/O5P6R7X.jpg" },
+      { name: "Kerupuk Bunga", price: 2000, img: "https://i.imgur.com/P6Q7S8Y.jpg" },
+      { name: "Kerupuk Ikan", price: 2000, img: "https://i.imgur.com/Q7R8T9U.jpg" },
+      { name: "Mix Kerupuk", price: 3000, img: "https://i.imgur.com/R8S9T0V.jpg" }
+    ];
+
+    // Topping
+    const toppings = [
+      { name: "Pentol", price: 3000, img: "https://i.imgur.com/CkPXqbh.jpg" },
+      { name: "Sosis", price: 4000, img: "https://i.imgur.com/IlDPsZk.jpg" },
+      { name: "Chikuwa", price: 5000, img: "https://i.imgur.com/4mjEXEf.jpg" },
+      { name: "Dumpling Keju", price: 6000, img: "https://i.imgur.com/mpt7UNz.jpg" },
+      { name: "Sosis Jumbo", price: 7000, img: "https://i.imgur.com/DUpBQEV.jpg" }
+    ];
+
+    const sayurGrid = document.getElementById("sayurGrid");
+    const kerupukGrid = document.getElementById("kerupukGrid");
+    const toppingGrid = document.getElementById("toppingGrid");
+    const totalDiv = document.getElementById("total");
+    const cart = {};
+
+    function createItemElement(item, category) {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <div class="item-price">Rp${item.price.toLocaleString()}</div>
+        <div class="item-name"><strong>${item.name}</strong></div>
+        <div class="quantity-controls">
+          <button class="quantity-btn minus" data-category="${category}" data-name="${item.name}">-</button>
+          <span class="quantity-value" data-category="${category}" data-name="${item.name}">0</span>
+          <button class="quantity-btn plus" data-category="${category}" data-name="${item.name}">+</button>
+        </div>
+      `;
+      return div;
+    }
+
+    // Render sayuran
+    sayuran.forEach(item => {
+      sayurGrid.appendChild(createItemElement(item, "sayuran"));
+    });
+
+    // Render kerupuk
+    kerupuk.forEach(item => {
+      kerupukGrid.appendChild(createItemElement(item, "kerupuk"));
+    });
+
+    // Render topping
+    toppings.forEach(item => {
+      toppingGrid.appendChild(createItemElement(item, "topping"));
+    });
+
+    function updateCart() {
+      let total = 0;
+      
+      // Update sayuran
+      sayuran.forEach(item => {
+        const qty = parseInt(document.querySelector(`.quantity-value[data-category="sayuran"][data-name="${item.name}"]`).textContent) || 0;
+        cart[`sayuran_${item.name}`] = qty;
+        total += item.price * qty;
+      });
+      
+      // Update kerupuk
+      kerupuk.forEach(item => {
+        const qty = parseInt(document.querySelector(`.quantity-value[data-category="kerupuk"][data-name="${item.name}"]`).textContent) || 0;
+        cart[`kerupuk_${item.name}`] = qty;
+        total += item.price * qty;
+      });
+      
+      // Update topping
+      toppings.forEach(item => {
+        const qty = parseInt(document.querySelector(`.quantity-value[data-category="topping"][data-name="${item.name}"]`).textContent) || 0;
+        cart[`topping_${item.name}`] = qty;
+        total += item.price * qty;
+      });
+      
+      totalDiv.textContent = `Total: Rp${total.toLocaleString()}`;
+    }
+
+    function handleQuantityClick(e) {
+      if (e.target.classList.contains("minus")) {
+        const category = e.target.getAttribute("data-category");
+        const name = e.target.getAttribute("data-name");
+        const valueElement = document.querySelector(`.quantity-value[data-category="${category}"][data-name="${name}"]`);
+        let value = parseInt(valueElement.textContent) || 0;
+        if (value > 0) {
+          value--;
+          valueElement.textContent = value;
+          updateCart();
+        }
+      } else if (e.target.classList.contains("plus")) {
+        const category = e.target.getAttribute("data-category");
+        const name = e.target.getAttribute("data-name");
+        const valueElement = document.querySelector(`.quantity-value[data-category="${category}"][data-name="${name}"]`);
+        let value = parseInt(valueElement.textContent) || 0;
+        value++;
+        valueElement.textContent = value;
+        updateCart();
+      }
+    }
+
+    sayurGrid.addEventListener("click", handleQuantityClick);
+    kerupukGrid.addEventListener("click", handleQuantityClick);
+    toppingGrid.addEventListener("click", handleQuantityClick);
+
+    function kirimWhatsApp() {
+      let pesan = `Halo! Saya ingin pesan Seblak:\n`;
+      pesan += `• Kuah: ${selectedKuah || "-"}\n`;
+      pesan += `• Tipe: ${selectedTipe || "-"}\n`;
+      pesan += `• Level: ${selectedLevel || "-"}\n\n`;
+      
+      pesan += `• Sayuran:\n`;
+      sayuran.forEach(item => {
+        const qty = cart[`sayuran_${item.name}`] || 0;
+        if (qty > 0) pesan += `  - ${item.name} x ${qty} (Rp${item.price * qty})\n`;
+      });
+      
+      pesan += `\n• Kerupuk:\n`;
+      kerupuk.forEach(item => {
+        const qty = cart[`kerupuk_${item.name}`] || 0;
+        if (qty > 0) pesan += `  - ${item.name} x ${qty} (Rp${item.price * qty})\n`;
+      });
+      
+      pesan += `\n• Topping:\n`;
+      toppings.forEach(item => {
+        const qty = cart[`topping_${item.name}`] || 0;
+        if (qty > 0) pesan += `  - ${item.name} x ${qty} (Rp${item.price * qty})\n`;
+      });
+      
+      pesan += `\n${totalDiv.textContent}`;
+
+      const url = `https://wa.me/6282131472101?text=${encodeURIComponent(pesan)}`;
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+	</html>
