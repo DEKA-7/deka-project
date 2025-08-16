@@ -3,80 +3,477 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Seblak Prasmanan</title>
+  <title>DeKa & Seblak - Menu & Pemesanan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      font-family: sans-serif;
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      color: #fff;
-      background: linear-gradient(180deg, #5b0000 0%, #a50000 100%);
-      min-height: 100vh;
     }
+    
+    :root {
+      --primary: #a50000;
+      --secondary: #5b0000;
+      --accent: #ffe600;
+      --light: #fff;
+      --dark: #2d0000;
+      --gray: #f5f5f5;
+      --success: #25D366;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--light);
+      background: linear-gradient(180deg, var(--secondary) 0%, var(--primary) 100%);
+      min-height: 100vh;
+      padding-bottom: 40px;
+      line-height: 1.6;
+      background-attachment: fixed;
+    }
+    
     .container {
-      max-width: 500px;
-      margin: auto;
+      max-width: 1000px;
+      margin: 0 auto;
       padding: 20px;
     }
-    h1, h2 {
+    
+    header {
       text-align: center;
-      color: #ffe600;
-      text-shadow: 1px 1px 3px #000;
+      margin-bottom: 30px;
+      padding-top: 20px;
+      position: relative;
     }
-    .section { margin-bottom: 20px; }
-    .options { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-    .option {
-      flex: 1 1 30%;
-      padding: 10px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 8px;
-      text-align: center;
-      cursor: pointer;
-      border: 2px solid transparent;
+    
+    h1 {
+      color: var(--accent);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
     }
-    .option.active { border-color: #ffe600; }
-    .level-img { width: 100%; max-width: 400px; margin: 10px auto; display: block; }
-    .item-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
-    .item {
-      background: rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 10px;
-      text-align: center;
+    
+    .tagline {
+      color: #ffcc00;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+    
+    .whatsapp-btn {
+      display: inline-block;
+      background: var(--success);
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 12px 25px;
+      border-radius: 50px;
+      margin: 15px 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+    
+    .whatsapp-btn:hover {
+      background: #128C7E;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+    
+    .whatsapp-btn i {
+      margin-right: 8px;
+    }
+    
+    .menu-section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 230, 0, 0.3);
+    }
+    
+    .section-header {
       display: flex;
-      flex-direction: column;
       align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent);
     }
-    .item img { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; margin-bottom: 5px; }
-    .total {
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 20px;
-      color: #ffe600;
+    
+    .section-header h2 {
+      color: var(--accent);
+      font-size: 1.8rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      margin: 0;
     }
-    button {
-      background: #ffe600;
-      color: #a50000;
-      border: none;
+    
+    .section-icon {
+      font-size: 2rem;
+      margin-right: 15px;
+    }
+    
+    .menu-category {
+      margin-bottom: 25px;
+    }
+    
+    .category-title {
+      color: #ffcc00;
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      padding-left: 10px;
+      border-left: 4px solid #ffcc00;
+    }
+    
+    .menu-item {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
       padding: 15px;
-      font-size: 18px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+    
+    .menu-item:hover {
+      background: rgba(0, 0, 0, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .item-info {
+      flex: 1;
+      padding-right: 40px;
+    }
+    
+    .item-name {
       font-weight: bold;
-      cursor: pointer;
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+      color: #fff;
+    }
+    
+    .item-desc {
+      font-size: 0.9rem;
+      color: #ddd;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    
+    .item-price {
+      color: var(--accent);
+      font-weight: bold;
+      font-size: 1.2rem;
+      white-space: nowrap;
+      min-width: 70px;
+      text-align: right;
+    }
+    
+    .spicy {
+      color: #ff6b6b;
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 8px;
+    }
+    
+    .item-addon {
+      background: rgba(255, 255, 255, 0.05);
       border-radius: 8px;
-      width: 100%;
+      padding: 12px;
       margin-top: 10px;
     }
-    .quantity-controls {
+    
+    .addon-title {
+      font-size: 0.9rem;
+      color: #ffcc00;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    
+    .addon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+    
+    .addon-item {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 6px;
+      padding: 8px 35px 8px 8px;
+      font-size: 0.85rem;
+      text-align: center;
+      position: relative;
+    }
+    
+    .addon-name {
+      margin-bottom: 3px;
+    }
+    
+    .addon-price {
+      color: var(--accent);
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    
+    .delivery-info {
+      text-align: center;
+      background: rgba(255, 230, 0, 0.15);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 30px 0;
+      border: 1px dashed var(--accent);
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #ffcc00;
+      font-size: 0.9rem;
+    }
+    
+    .hot-item {
+      position: relative;
+    }
+    
+    .hot-item::after {
+      content: "🔥";
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      font-size: 1.2rem;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    
+    /* Order Section Styles */
+    .order-section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 230, 0, 0.3);
+    }
+    
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--accent);
+    }
+    
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 5px 5px 0 0;
+      margin-right: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .tab.active {
+      background: var(--accent);
+      color: var(--dark);
+      font-weight: bold;
+    }
+    
+    .tab:hover:not(.active) {
+      background: rgba(0, 0, 0, 0.5);
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+    
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--light);
+      font-size: 1rem;
+    }
+    
+    .form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .form-row .form-group {
+      flex: 1;
+    }
+    
+    .cart {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 20px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 10px;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      align-items: center;
+    }
+    
+    .cart-item-name {
+      flex: 2;
+    }
+    
+    .cart-item-price {
+      flex: 1;
+      text-align: right;
+      color: var(--accent);
+    }
+    
+    .cart-item-quantity {
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 10px;
-      width: 100%;
     }
+    
     .quantity-btn {
-      background: rgba(255,255,255,0.2);
+      width: 30px;
+      height: 30px;
+      background: var(--accent);
+      color: var(--dark);
       border: none;
-      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    
+    .quantity-btn:hover {
+      background: #ffcc00;
+      transform: scale(1.1);
+    }
+    
+    .quantity-value {
+      margin: 0 10px;
+      min-width: 30px;
+      text-align: center;
+    }
+    
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 0;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-top: 2px solid var(--accent);
+      margin-top: 10px;
+    }
+    
+    .total-label {
+      color: var(--light);
+    }
+    
+    .total-amount {
+      color: var(--accent);
+    }
+    
+    .cart-empty {
+      text-align: center;
+      padding: 20px;
+      color: #aaa;
+    }
+    
+    .order-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .order-btn:hover {
+      background: #ffcc00;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .order-btn:disabled {
+      background: #666;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .add-to-cart {
+      background: rgba(255, 230, 0, 0.2);
+      border: none;
+      color: var(--accent);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+      transition: all 0.2s ease;
+    }
+    
+    .add-to-cart:hover {
+      background: rgba(255, 230, 0, 0.3);
+      transform: scale(1.1);
+    }
+    
+    .addon-add-to-cart {
+      background: rgba(255, 230, 0, 0.2);
+      border: none;
+      color: var(--accent);
       width: 25px;
       height: 25px;
       border-radius: 50%;
@@ -85,237 +482,1145 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
     }
-    .quantity-value {
-      margin: 0 10px;
-      min-width: 20px;
-      text-align: center;
+    
+    .addon-add-to-cart:hover {
+      background: rgba(255, 230, 0, 0.3);
+      transform: scale(1.1);
     }
-    .item-price {
+    
+    .cart-badge {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: var(--dark);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: bold;
-      margin: 5px 0;
+      font-size: 1.2rem;
+      z-index: 100;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-    .item-name {
+    
+    .cart-badge:hover {
+      transform: scale(1.1);
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    /* Modal untuk pilihan tambahan */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-content {
+      background: linear-gradient(to bottom, var(--secondary), var(--primary));
+      padding: 25px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 2px solid var(--accent);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .modal-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .modal-title {
+      color: var(--accent);
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    
+    .modal-subtitle {
+      color: #ffcc00;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+    
+    .option-group {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+    
+    .option-title {
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    @media (max-width: 480px) {
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .option-item {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 15px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 230, 0, 0.3);
+      position: relative;
+    }
+    
+    .option-item:hover {
+      background: rgba(0, 0, 0, 0.5);
+      transform: translateY(-3px);
+    }
+    
+    .option-item.selected {
+      background: var(--accent);
+      color: var(--dark);
+      font-weight: bold;
+      border-color: var(--accent);
+    }
+    
+    .option-name {
+      font-size: 1.1rem;
       margin-bottom: 5px;
+    }
+    
+    .option-price {
+      font-size: 0.9rem;
+      color: #ffcc00;
+    }
+    
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    
+    .modal-btn.confirm {
+      background: var(--accent);
+      color: var(--dark);
+    }
+    
+    .modal-btn.cancel {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--light);
+    }
+    
+    .modal-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    /* Animasi notifikasi */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--success);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+    
+    .notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    /* Responsivitas */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .menu-section, .order-section {
+        padding: 20px 15px;
+      }
+      
+      .section-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .category-title {
+        font-size: 1.2rem;
+      }
+      
+      .item-name {
+        font-size: 1rem;
+      }
+      
+      .item-price {
+        font-size: 1.1rem;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .cart-badge {
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+      }
+      
+      .item-info {
+        padding-right: 35px;
+      }
+      
+      .modal-title {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="cart-badge" id="cartBadge">0</div>
+  
   <div class="container">
-    <h1>Seblak Prasmanan</h1>
-
-    <div class="section">
-      <h2>1. Pilih Jenis Kuah</h2>
-      <div class="options" id="kuahOptions">
-        <div class="option">Seblak</div>
-        <div class="option">Asam Manis</div>
-        <div class="option">Tomyum</div>
+    <header>
+      <h1>DeKa & Seblak</h1>
+      <div class="tagline">Rasakan Kelezatan Masakan Tradisional dengan Sentuhan Modern</div>
+      <a href="https://wa.me/6281391674116" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+      </a>
+    </header>
+    
+    <!-- Order Section -->
+    <section class="order-section">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Form Pemesanan</h2>
       </div>
-    </div>
-
-    <div class="section">
-      <h2>2. Pilih Tipe Kuah</h2>
-      <div class="options" id="tipeOptions">
-        <div class="option">Nyemek</div>
-        <div class="option">Campur</div>
-        <div class="option">Pisah</div>
+      
+      <div class="tabs">
+        <div class="tab active" data-tab="delivery">Pengiriman</div>
+        <div class="tab" data-tab="reservation">Reservasi</div>
       </div>
-    </div>
-
-    <div class="section">
-      <h2>3. Pilih Level Pedas</h2>
-      <div class="options" id="levelOptions">
-        <div class="option">1</div>
-        <div class="option">2</div>
-        <div class="option">3</div>
-        <div class="option">4</div>
-        <div class="option">5</div>
-        <div class="option">6</div>
-        <div class="option">7</div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>4. Pilih Sayuran</h2>
-      <div class="item-grid" id="sayurGrid"></div>
-    </div>
-
-    <div class="section">
-      <h2>5. Pilih Kerupuk</h2>
-      <div class="item-grid" id="kerupukGrid"></div>
-    </div>
-
-    <div class="section">
-      <h2>6. Pilih Topping</h2>
-      <div class="item-grid" id="toppingGrid"></div>
-    </div>
-
-    <div class="total" id="total">Total: Rp0</div>
-    <button onclick="kirimWhatsApp()">Pesan via WhatsApp</button>
-  </div>
-
-  <script>
-    const kuahOptions = document.querySelectorAll("#kuahOptions .option");
-    const tipeOptions = document.querySelectorAll("#tipeOptions .option");
-    const levelOptions = document.querySelectorAll("#levelOptions .option");
-
-    let selectedKuah = "", selectedTipe = "", selectedLevel = "";
-
-    kuahOptions.forEach(opt => opt.onclick = () => selectOption(kuahOptions, opt, v => selectedKuah = v));
-    tipeOptions.forEach(opt => opt.onclick = () => selectOption(tipeOptions, opt, v => selectedTipe = v));
-    levelOptions.forEach(opt => opt.onclick = () => selectOption(levelOptions, opt, v => selectedLevel = v));
-
-    function selectOption(all, el, setter) {
-      all.forEach(o => o.classList.remove("active"));
-      el.classList.add("active");
-      setter(el.textContent);
-    }
-
-    // Sayuran
-    const sayuran = [
-      { name: "Sawi Hijau", price: 2000, img: "https://i.imgur.com/JY7ZQ8a.jpg" },
-      { name: "Sawi Putih", price: 2000, img: "https://i.imgur.com/Km3VX9T.jpg" },
-      { name: "Mix Sayur", price: 2000, img: "https://i.imgur.com/Lp4N2Qx.jpg" }
-    ];
-
-    // Kerupuk
-    const kerupuk = [
-      { name: "Kerupuk Mawar", price: 2000, img: "https://i.imgur.com/M9R7Y2v.jpg" },
-      { name: "Kerupuk Udang", price: 2000, img: "https://i.imgur.com/N3P4Q5W.jpg" },
-      { name: "Kerupuk Bawang", price: 2000, img: "https://i.imgur.com/O5P6R7X.jpg" },
-      { name: "Kerupuk Bunga", price: 2000, img: "https://i.imgur.com/P6Q7S8Y.jpg" },
-      { name: "Kerupuk Ikan", price: 2000, img: "https://i.imgur.com/Q7R8T9U.jpg" },
-      { name: "Mix Kerupuk", price: 3000, img: "https://i.imgur.com/R8S9T0V.jpg" }
-    ];
-
-    // Topping
-    const toppings = [
-      { name: "Pentol", price: 3000, img: "https://i.imgur.com/CkPXqbh.jpg" },
-      { name: "Sosis", price: 4000, img: "https://i.imgur.com/IlDPsZk.jpg" },
-      { name: "Chikuwa", price: 5000, img: "https://i.imgur.com/4mjEXEf.jpg" },
-      { name: "Dumpling Keju", price: 6000, img: "https://i.imgur.com/mpt7UNz.jpg" },
-      { name: "Sosis Jumbo", price: 7000, img: "https://i.imgur.com/DUpBQEV.jpg" }
-    ];
-
-    const sayurGrid = document.getElementById("sayurGrid");
-    const kerupukGrid = document.getElementById("kerupukGrid");
-    const toppingGrid = document.getElementById("toppingGrid");
-    const totalDiv = document.getElementById("total");
-    const cart = {};
-
-    function createItemElement(item, category) {
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `
-        <img src="${item.img}" alt="${item.name}">
-        <div class="item-price">Rp${item.price.toLocaleString()}</div>
-        <div class="item-name"><strong>${item.name}</strong></div>
-        <div class="quantity-controls">
-          <button class="quantity-btn minus" data-category="${category}" data-name="${item.name}">-</button>
-          <span class="quantity-value" data-category="${category}" data-name="${item.name}">0</span>
-          <button class="quantity-btn plus" data-category="${category}" data-name="${item.name}">+</button>
+      
+      <div id="deliveryForm">
+        <div class="form-group">
+          <label for="deliveryName">Nama Lengkap*</label>
+          <input type="text" id="deliveryName" placeholder="Nama penerima pesanan">
         </div>
-      `;
-      return div;
+        
+        <div class="form-group">
+          <label for="deliveryAddress">Alamat Lengkap*</label>
+          <textarea id="deliveryAddress" placeholder="Alamat pengiriman (jalan, nomor, RT/RW, kelurahan, kecamatan)"></textarea>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="deliveryDate">Tanggal Pengiriman</label>
+            <input type="date" id="deliveryDate">
+          </div>
+          <div class="form-group">
+            <label for="deliveryTime">Waktu Pengiriman</label>
+            <select id="deliveryTime">
+              <option value="">Pilih Waktu</option>
+              <option value="10:00-12:00">10:00 - 12:00</option>
+              <option value="12:00-14:00">12:00 - 14:00</option>
+              <option value="14:00-16:00">14:00 - 16:00</option>
+              <option value="16:00-18:00">16:00 - 18:00</option>
+              <option value="18:00-20:00">18:00 - 20:00</option>
+              <option value="20:00-22:00">20:00 - 22:00</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <div id="reservationForm" class="hidden">
+        <div class="form-group">
+          <label for="reservationName">Nama Pemesan*</label>
+          <input type="text" id="reservationName" placeholder="Nama untuk reservasi">
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reservationDate">Tanggal Reservasi*</label>
+            <input type="date" id="reservationDate">
+          </div>
+          <div class="form-group">
+            <label for="reservationTime">Waktu Reservasi*</label>
+            <select id="reservationTime">
+              <option value="">Pilih Waktu</option>
+              <option value="10:00">10:00</option>
+              <option value="11:00">11:00</option>
+              <option value="12:00">12:00</option>
+              <option value="13:00">13:00</option>
+              <option value="14:00">14:00</option>
+              <option value="15:00">15:00</option>
+              <option value="16:00">16:00</option>
+              <option value="17:00">17:00</option>
+              <option value="18:00">18:00</option>
+              <option value="19:00">19:00</option>
+              <option value="20:00">20:00</option>
+              <option value="21:00">21:00</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="reservationGuests">Jumlah Tamu*</label>
+          <input type="number" id="reservationGuests" placeholder="Jumlah orang" min="1" value="2">
+        </div>
+        
+        <div class="form-group">
+          <label for="reservationNotes">Catatan Tambahan</label>
+          <textarea id="reservationNotes" placeholder="Permintaan khusus atau catatan"></textarea>
+        </div>
+      </div>
+      
+      <div class="cart">
+        <div class="cart-header">
+          <div class="cart-item-name">Item Pesanan</div>
+          <div class="cart-item-price">Harga</div>
+          <div class="cart-item-quantity">Jumlah</div>
+        </div>
+        
+        <div id="cartItems">
+          <div class="cart-empty">Keranjang belanja masih kosong</div>
+        </div>
+        
+        <div class="cart-total">
+          <div class="total-label">Total Pesanan:</div>
+          <div class="total-amount" id="cartTotal">Rp0</div>
+        </div>
+      </div>
+      
+      <button class="order-btn" id="orderBtn" disabled>Kirim Pesanan via WhatsApp</button>
+    </section>
+    
+    <!-- Menu DeKa -->
+    <section class="menu-section">
+      <div class="section-header">
+        <div class="section-icon">🍜</div>
+        <h2>Menu DeKa - Wajib Coba</h2>
+      </div>
+      
+      <div class="menu-category">
+        <div class="menu-item hot-item">
+          <div class="item-info">
+            <div class="item-name">Indomie Nyemek Kornet (INK)</div>
+          </div>
+          <div class="item-price">15k</div>
+          <button class="add-to-cart" data-id="1" data-name="Indomie Nyemek Kornet (INK)" data-price="15000" data-type="other">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Pentol / Pentol Aci Mercon <span class="spicy">🔥 Pedas</span></div>
+          </div>
+          <div class="item-price">12k</div>
+          <button class="add-to-cart" data-id="2" data-name="Pentol / Pentol Aci Mercon" data-price="12000" data-type="other">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Mie Jebew</div>
+          </div>
+          <div class="item-price">10k</div>
+          <button class="add-to-cart" data-id="3" data-name="Mie Jebew" data-price="10000" data-type="other">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Ayam Oseng</div>
+          </div>
+          <div class="item-price">12k</div>
+          <button class="add-to-cart" data-id="4" data-name="Ayam Oseng" data-price="12000" data-type="other">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Ceker Mercon <span class="spicy">🔥 Pedas</span></div>
+          </div>
+          <div class="item-price">12k</div>
+          <button class="add-to-cart" data-id="5" data-name="Ceker Mercon" data-price="12000" data-type="other">+</button>
+        </div>
+        
+        <div class="menu-item hot-item">
+          <div class="item-info">
+            <div class="item-name">Ceker Enoki Mercon <span class="spicy">🔥 Pedas</span></div>
+          </div>
+          <div class="item-price">16k</div>
+          <button class="add-to-cart" data-id="6" data-name="Ceker Enoki Mercon" data-price="16000" data-type="other">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Rice Bowl Katsu BBQ</div>
+          </div>
+          <div class="item-price">12k</div>
+          <button class="add-to-cart" data-id="7" data-name="Rice Bowl Katsu BBQ" data-price="12000" data-type="other">+</button>
+        </div>
+      </div>
+      
+      <h3 class="category-title">Menu Lain</h3>
+      
+      <div class="menu-category">
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Oseng Tempura Mix</div>
+          </div>
+          <div class="item-price">12k</div>
+          <button class="add-to-cart" data-id="8" data-name="Oseng Tempura Mix" data-price="12000" data-type="other">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Tempura Goreng Mix</div>
+          </div>
+          <div class="item-price">12k</div>
+          <button class="add-to-cart" data-id="9" data-name="Tempura Goreng Mix" data-price="12000" data-type="other">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Tahu Bakso</div>
+          </div>
+          <div class="item-price">10k</div>
+          <button class="add-to-cart" data-id="10" data-name="Tahu Bakso" data-price="10000" data-type="other">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Kentang Goreng</div>
+          </div>
+          <div class="item-price">12k</div>
+          <button class="add-to-cart" data-id="11" data-name="Kentang Goreng" data-price="12000" data-type="other">+</button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Menu Seblak -->
+    <section class="menu-section">
+      <div class="section-header">
+        <div class="section-icon">🥘</div>
+        <h2>Daftar Menu Seblak</h2>
+      </div>
+      
+      <div class="menu-category">
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Seblak Original</div>
+            <div class="item-desc">Kerupuk, pentol, sosis, sayuran, telur, mie</div>
+          </div>
+          <div class="item-price">12k</div>
+          <button class="add-to-cart" data-id="12" data-name="Seblak Original" data-price="12000" data-type="seblak">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Seblak Jumbo</div>
+            <div class="item-desc">Seblak ori + sosis pentol double + topoki + somay</div>
+          </div>
+          <div class="item-price">16k</div>
+          <button class="add-to-cart" data-id="13" data-name="Seblak Jumbo" data-price="16000" data-type="seblak">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Seblak Cuanki</div>
+            <div class="item-desc">Seblak ori + pentol aci + cuanki lidah + cuanki tahu + somay kering + pilus</div>
+          </div>
+          <div class="item-price">22k</div>
+          <button class="add-to-cart" data-id="14" data-name="Seblak Cuanki" data-price="22000" data-type="seblak">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Seblak Mix Suki</div>
+            <div class="item-desc">Seblak ori + dumpling keju + chikuwa + crabstick + siomay + bola ikan + topoki</div>
+          </div>
+          <div class="item-price">25k</div>
+          <button class="add-to-cart" data-id="15" data-name="Seblak Mix Suki" data-price="25000" data-type="seblak">+</button>
+        </div>
+        
+        <div class="menu-item hot-item">
+          <div class="item-info">
+            <div class="item-name">Seblak Komplit <span class="spicy">🔥 Pedas Level 1-7</span></div>
+            <div class="item-desc">Seblak ori + dumpling keju + bola ikan + bola salmon + bola lobster + pentol aci + kembang cumi + ceker + jamur enoki</div>
+          </div>
+          <div class="item-price">35k</div>
+          <button class="add-to-cart" data-id="16" data-name="Seblak Komplit" data-price="35000" data-type="seblak">+</button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Menu Geprek -->
+    <section class="menu-section">
+      <div class="section-header">
+        <div class="section-icon">🍗</div>
+        <h2>Menu Geprek</h2>
+      </div>
+      
+      <div class="menu-category">
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Nasi Geprek Sayap / Paha Bawah</div>
+            <div class="item-desc">Nasi + ayam + sambal + timun + tempe</div>
+          </div>
+          <div class="item-price">10k</div>
+          <button class="add-to-cart" data-id="17" data-name="Nasi Geprek Sayap/Paha Bawah" data-price="10000" data-type="geprek">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Nasi Geprek Dada / Paha Atas</div>
+            <div class="item-desc">Nasi + ayam + sambal + timun + tempe</div>
+          </div>
+          <div class="item-price">12k</div>
+          <button class="add-to-cart" data-id="18" data-name="Nasi Geprek Dada/Paha Atas" data-price="12000" data-type="geprek">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Nasi Telur</div>
+            <div class="item-desc">Nasi + telur + sambal + timun + tempe</div>
+          </div>
+          <div class="item-price">10k</div>
+          <button class="add-to-cart" data-id="19" data-name="Nasi Telur" data-price="10000" data-type="geprek">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Nasi Nugget</div>
+            <div class="item-desc">Nasi + Nugget 7 biji + sambal + timun + tempe</div>
+          </div>
+          <div class="item-price">12k</div>
+          <button class="add-to-cart" data-id="20" data-name="Nasi Nugget" data-price="12000" data-type="geprek">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Geprek Mantap Sayap / Paha Bawah</div>
+            <div class="item-desc">Nasi + ayam + telur + tempe + timun + sambal</div>
+          </div>
+          <div class="item-price">13k</div>
+          <button class="add-to-cart" data-id="21" data-name="Geprek Mantap Sayap/Paha Bawah" data-price="13000" data-type="geprek">+</button>
+        </div>
+        
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Geprek Mantap Dada / Paha Atas</div>
+            <div class="item-desc">Nasi + ayam + telur + tempe + timun + sambal</div>
+          </div>
+          <div class="item-price">15k</div>
+          <button class="add-to-cart" data-id="22" data-name="Geprek Mantap Dada/Paha Atas" data-price="15000" data-type="geprek">+</button>
+        </div>
+      </div>
+      
+      <h3 class="category-title">Tambahan</h3>
+      
+      <div class="item-addon">
+        <div class="addon-grid">
+          <div class="addon-item">
+            <div class="addon-name">Nasi</div>
+            <div class="addon-price">3k</div>
+            <button class="addon-add-to-cart" data-id="23" data-name="Nasi" data-price="3000">+</button>
+          </div>
+          <div class="addon-item">
+            <div class="addon-name">Telur</div>
+            <div class="addon-price">3k</div>
+            <button class="addon-add-to-cart" data-id="24" data-name="Telur" data-price="3000">+</button>
+          </div>
+          <div class="addon-item">
+            <div class="addon-name">Dada / Paha Atas</div>
+            <div class="addon-price">10k</div>
+            <button class="addon-add-to-cart" data-id="25" data-name="Dada/Paha Atas" data-price="10000">+</button>
+          </div>
+          <div class="addon-item">
+            <div class="addon-name">Sayap / Paha Bawah</div>
+            <div class="addon-price">8k</div>
+            <button class="addon-add-to-cart" data-id="26" data-name="Sayap/Paha Bawah" data-price="8000">+</button>
+          </div>
+          <div class="addon-item">
+            <div class="addon-name">Nugget</div>
+            <div class="addon-price">1k/biji</div>
+            <button class="addon-add-to-cart" data-id="27" data-name="Nugget" data-price="1000">+</button>
+          </div>
+          <div class="addon-item">
+            <div class="addon-name">Sambal</div>
+            <div class="addon-price">3k</div>
+            <button class="addon-add-to-cart" data-id="28" data-name="Sambal" data-price="3000">+</button>
+          </div>
+          <div class="addon-item">
+            <div class="addon-name">Tempe</div>
+            <div class="addon-price">1k</div>
+            <button class="addon-add-to-cart" data-id="29" data-name="Tempe" data-price="1000">+</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <div class="delivery-info">
+      <h3>📦 Delivery Order Available</h3>
+      <p>Pesanan diantar ke alamat Anda! Minimal order Rp 50.000 (wilayah terdekat)</p>
+      <p>Jam Operasional: Setiap Hari 10:00 - 22:00</p>
+    </div>
+ 
+    <footer>
+      <p>DeKa & Seblak &copy; 2023 | Buka Setiap Hari 10:00 - 22:00</p>
+      <p>Jl. Kuliner No. 123, Kota Bandung | Telp: (022) 123-4567</p>
+    </footer>
+  </div>
+  
+  <!-- Modal untuk pilihan tambahan -->
+  <div class="modal" id="optionModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <div class="modal-subtitle" id="modalSubtitle"></div>
+      </div>
+      
+      <div id="modalBody">
+        <!-- Konten akan diisi secara dinamis -->
+      </div>
+      
+      <div class="modal-buttons">
+        <button class="modal-btn confirm" id="confirmOption">Konfirmasi</button>
+        <button class="modal-btn cancel" id="cancelOption">Batal</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="notification" id="notification">Item telah ditambahkan ke keranjang!</div>
+  
+  <script>
+    // Data state
+    let cart = [];
+    let orderType = "delivery";
+    let selectedItem = null;
+    
+    // DOM Elements
+    const cartBadge = document.getElementById('cartBadge');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const orderBtn = document.getElementById('orderBtn');
+    const tabs = document.querySelectorAll('.tab');
+    const deliveryForm = document.getElementById('deliveryForm');
+    const reservationForm = document.getElementById('reservationForm');
+    const addToCartButtons = document.querySelectorAll('.add-to-cart, .addon-add-to-cart');
+    const optionModal = document.getElementById('optionModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSubtitle = document.getElementById('modalSubtitle');
+    const modalBody = document.getElementById('modalBody');
+    const confirmOptionBtn = document.getElementById('confirmOption');
+    const cancelOptionBtn = document.getElementById('cancelOption');
+    const notification = document.getElementById('notification');
+    
+    // Tab switching
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        orderType = tab.dataset.tab;
+        
+        if (orderType === 'delivery') {
+          deliveryForm.classList.remove('hidden');
+          reservationForm.classList.add('hidden');
+        } else {
+          deliveryForm.classList.add('hidden');
+          reservationForm.classList.remove('hidden');
+        }
+      });
+    });
+    
+    // Fungsi untuk menampilkan notifikasi
+    function showNotification(message) {
+      notification.textContent = message;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
     }
-
-    // Render sayuran
-    sayuran.forEach(item => {
-      sayurGrid.appendChild(createItemElement(item, "sayuran"));
+    
+    // Fungsi untuk menampilkan modal pilihan
+    function showOptionModal(item) {
+      modalTitle.textContent = item.name;
+      modalSubtitle.textContent = `Rp${item.price.toLocaleString()}`;
+      modalBody.innerHTML = '';
+      selectedItem = item;
+      
+      // Berdasarkan tipe menu, tampilkan opsi yang sesuai
+      if (item.type === 'seblak') {
+        // Pilihan untuk Seblak: Level pedas dan jenis kuah
+        modalBody.innerHTML = `
+          <div class="option-group">
+            <div class="option-title">Level Pedas</div>
+            <div class="option-grid">
+              <div class="option-item" data-value="1" data-price="0">
+                <div class="option-name">Level 1</div>
+                <div class="option-price">Tidak Pedas</div>
+              </div>
+              <div class="option-item" data-value="2" data-price="0">
+                <div class="option-name">Level 2</div>
+              </div>
+              <div class="option-item" data-value="3" data-price="0">
+                <div class="option-name">Level 3</div>
+              </div>
+              <div class="option-item" data-value="4" data-price="0">
+                <div class="option-name">Level 4</div>
+              </div>
+              <div class="option-item" data-value="5" data-price="0">
+                <div class="option-name">Level 5</div>
+              </div>
+              <div class="option-item" data-value="6" data-price="2000">
+                <div class="option-name">Level 6</div>
+                <div class="option-price">+ Rp 2.000</div>
+              </div>
+              <div class="option-item" data-value="7" data-price="4000">
+                <div class="option-name">Level 7</div>
+                <div class="option-price">+ Rp 4.000</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="option-group">
+            <div class="option-title">Jenis Kuah</div>
+            <div class="option-grid">
+              <div class="option-item" data-value="campur">
+                <div class="option-name">Campur</div>
+                <div class="option-price">Kuah dicampur</div>
+              </div>
+              <div class="option-item" data-value="pisah">
+                <div class="option-name">Pisah</div>
+                <div class="option-price">Kuah terpisah</div>
+              </div>
+              <div class="option-item" data-value="nyemek">
+                <div class="option-name">Nyemek</div>
+                <div class="option-price">Sedikit kuah</div>
+              </div>
+            </div>
+          </div>
+        `;
+      } 
+      else if (item.type === 'geprek') {
+        // Pilihan untuk Geprek: Jenis sambal dan penyajian
+        modalBody.innerHTML = `
+          <div class="option-group">
+            <div class="option-title">Jenis Sambal</div>
+            <div class="option-grid">
+              <div class="option-item" data-value="bawang">
+                <div class="option-name">Sambal Bawang</div>
+              </div>
+              <div class="option-item" data-value="hijau">
+                <div class="option-name">Sambal Hijau</div>
+              </div>
+              <div class="option-item" data-value="terasi">
+                <div class="option-name">Sambal Terasi</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="option-group">
+            <div class="option-title">Penyajian</div>
+            <div class="option-grid">
+              <div class="option-item" data-value="campur">
+                <div class="option-name">Campur</div>
+                <div class="option-price">Sambal dicampur</div>
+              </div>
+              <div class="option-item" data-value="pisah">
+                <div class="option-name">Pisah</div>
+                <div class="option-price">Sambal terpisah</div>
+              </div>
+            </div>
+          </div>
+        `;
+      } 
+      else {
+        // Pilihan untuk menu lain: Level pedas
+        modalBody.innerHTML = `
+          <div class="option-group">
+            <div class="option-title">Level Pedas</div>
+            <div class="option-grid">
+              <div class="option-item" data-value="tidak pedas">
+                <div class="option-name">Tidak Pedas</div>
+              </div>
+              <div class="option-item" data-value="sedang">
+                <div class="option-name">Sedang</div>
+              </div>
+              <div class="option-item" data-value="pedas">
+                <div class="option-name">Pedas</div>
+              </div>
+              <div class="option-item" data-value="sangat pedas">
+                <div class="option-name">Sangat Pedas</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      
+      // Set opsi pertama sebagai terpilih secara default
+      const optionGroups = modalBody.querySelectorAll('.option-group');
+      optionGroups.forEach(group => {
+        const firstOption = group.querySelector('.option-item');
+        if (firstOption) {
+          firstOption.classList.add('selected');
+        }
+      });
+      
+      // Tambahkan event listeners untuk opsi
+      const optionItems = modalBody.querySelectorAll('.option-item');
+      optionItems.forEach(item => {
+        item.addEventListener('click', () => {
+          // Hanya satu opsi per grup yang bisa dipilih
+          const group = item.closest('.option-group');
+          group.querySelectorAll('.option-item').forEach(i => {
+            i.classList.remove('selected');
+          });
+          item.classList.add('selected');
+        });
+      });
+      
+      optionModal.style.display = 'flex';
+    }
+    
+    // Fungsi untuk menyembunyikan modal
+    function hideOptionModal() {
+      optionModal.style.display = 'none';
+      selectedItem = null;
+    }
+    
+    // Konfirmasi pilihan tambahan
+    confirmOptionBtn.addEventListener('click', () => {
+      if (!selectedItem) return;
+      
+      // Kumpulkan semua pilihan yang dipilih
+      const selectedOptions = {};
+      let extraPrice = 0;
+      
+      // Loop melalui semua grup opsi
+      const optionGroups = modalBody.querySelectorAll('.option-group');
+      optionGroups.forEach(group => {
+        const selectedOption = group.querySelector('.option-item.selected');
+        if (selectedOption) {
+          const optionName = group.querySelector('.option-title').textContent;
+          const optionValue = selectedOption.dataset.value;
+          
+          // Simpan pilihan
+          selectedOptions[optionName] = optionValue;
+          
+          // Tambahkan harga ekstra jika ada
+          if (selectedOption.dataset.price) {
+            extraPrice += parseInt(selectedOption.dataset.price);
+          }
+        }
+      });
+      
+      // Jika ada pilihan yang belum dipilih
+      if (Object.keys(selectedOptions).length < optionGroups.length) {
+        alert('Harap pilih semua opsi yang tersedia');
+        return;
+      }
+      
+      // Hitung harga akhir
+      const finalPrice = selectedItem.price + extraPrice;
+      
+      // Cari apakah item sudah ada di keranjang dengan pilihan yang sama
+      const existingItem = cart.find(item => 
+        item.id === selectedItem.id && 
+        JSON.stringify(item.options) === JSON.stringify(selectedOptions)
+      );
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          id: selectedItem.id,
+          name: selectedItem.name,
+          price: finalPrice,
+          quantity: 1,
+          options: selectedOptions
+        });
+      }
+      
+      updateCartUI();
+      hideOptionModal();
+      showNotification(`${selectedItem.name} telah ditambahkan ke keranjang!`);
     });
-
-    // Render kerupuk
-    kerupuk.forEach(item => {
-      kerupukGrid.appendChild(createItemElement(item, "kerupuk"));
+    
+    // Batal memilih
+    cancelOptionBtn.addEventListener('click', hideOptionModal);
+    
+    // Add to cart functionality
+    addToCartButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const id = button.dataset.id;
+        const name = button.dataset.name;
+        const price = parseInt(button.dataset.price);
+        const type = button.dataset.type || 'other'; // Default 'other'
+        
+        // Untuk addon, langsung tambahkan ke keranjang tanpa modal
+        if (button.classList.contains('addon-add-to-cart')) {
+          const existingItem = cart.find(item => 
+            item.id === id && 
+            Object.keys(item.options || {}).length === 0
+          );
+          
+          if (existingItem) {
+            existingItem.quantity += 1;
+          } else {
+            cart.push({
+              id,
+              name,
+              price,
+              quantity: 1
+            });
+          }
+          
+          updateCartUI();
+          showNotification(`${name} telah ditambahkan ke keranjang!`);
+          return;
+        }
+        
+        // Untuk menu dengan pilihan khusus, tampilkan modal
+        if (type === 'seblak' || type === 'geprek' || type === 'other') {
+          showOptionModal({ id, name, price, type });
+          return;
+        }
+      });
     });
-
-    // Render topping
-    toppings.forEach(item => {
-      toppingGrid.appendChild(createItemElement(item, "topping"));
-    });
-
-    function updateCart() {
+    
+    // Update cart UI
+    function updateCartUI() {
+      // Update cart badge
+      const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+      cartBadge.textContent = totalItems;
+      
+      // Update cart items
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<div class="cart-empty">Keranjang belanja masih kosong</div>';
+        cartTotal.textContent = 'Rp0';
+        orderBtn.disabled = true;
+        return;
+      }
+      
+      let itemsHTML = '';
       let total = 0;
       
-      // Update sayuran
-      sayuran.forEach(item => {
-        const qty = parseInt(document.querySelector(`.quantity-value[data-category="sayuran"][data-name="${item.name}"]`).textContent) || 0;
-        cart[`sayuran_${item.name}`] = qty;
-        total += item.price * qty;
-      });
-      
-      // Update kerupuk
-      kerupuk.forEach(item => {
-        const qty = parseInt(document.querySelector(`.quantity-value[data-category="kerupuk"][data-name="${item.name}"]`).textContent) || 0;
-        cart[`kerupuk_${item.name}`] = qty;
-        total += item.price * qty;
-      });
-      
-      // Update topping
-      toppings.forEach(item => {
-        const qty = parseInt(document.querySelector(`.quantity-value[data-category="topping"][data-name="${item.name}"]`).textContent) || 0;
-        cart[`topping_${item.name}`] = qty;
-        total += item.price * qty;
-      });
-      
-      totalDiv.textContent = `Total: Rp${total.toLocaleString()}`;
-    }
-
-    function handleQuantityClick(e) {
-      if (e.target.classList.contains("minus")) {
-        const category = e.target.getAttribute("data-category");
-        const name = e.target.getAttribute("data-name");
-        const valueElement = document.querySelector(`.quantity-value[data-category="${category}"][data-name="${name}"]`);
-        let value = parseInt(valueElement.textContent) || 0;
-        if (value > 0) {
-          value--;
-          valueElement.textContent = value;
-          updateCart();
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        
+        // Tentukan nama untuk ditampilkan (tambahkan pilihan jika ada)
+        let displayName = item.name;
+        
+        if (item.options) {
+          const optionsText = Object.entries(item.options)
+            .map(([key, value]) => `${key}: ${value}`)
+            .join(', ');
+          displayName += ` (${optionsText})`;
         }
-      } else if (e.target.classList.contains("plus")) {
-        const category = e.target.getAttribute("data-category");
-        const name = e.target.getAttribute("data-name");
-        const valueElement = document.querySelector(`.quantity-value[data-category="${category}"][data-name="${name}"]`);
-        let value = parseInt(valueElement.textContent) || 0;
-        value++;
-        valueElement.textContent = value;
-        updateCart();
+        
+        itemsHTML += `
+          <div class="cart-item" data-id="${item.id}">
+            <div class="cart-item-name">${displayName}</div>
+            <div class="cart-item-price">Rp${item.price.toLocaleString()}</div>
+            <div class="cart-item-quantity">
+              <button class="quantity-btn minus">-</button>
+              <span class="quantity-value">${item.quantity}</span>
+              <button class="quantity-btn plus">+</button>
+            </div>
+          </div>
+        `;
+      });
+      
+      cartItems.innerHTML = itemsHTML;
+      cartTotal.textContent = `Rp${total.toLocaleString()}`;
+      
+      // Add event listeners to quantity buttons
+      document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const cartItem = e.target.closest('.cart-item');
+          const id = cartItem.dataset.id;
+          const item = cart.find(item => item.id === id);
+          
+          if (item.quantity > 1) {
+            item.quantity -= 1;
+          } else {
+            cart = cart.filter(i => i.id !== id);
+          }
+          
+          updateCartUI();
+        });
+      });
+      
+      document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const cartItem = e.target.closest('.cart-item');
+          const id = cartItem.dataset.id;
+          const item = cart.find(item => item.id === id);
+          
+          item.quantity += 1;
+          updateCartUI();
+        });
+      });
+      
+      orderBtn.disabled = false;
+    }
+    
+    // Send order via WhatsApp
+    orderBtn.addEventListener('click', () => {
+      // Validate form
+      let isValid = true;
+      let customerInfo = '';
+      
+      if (orderType === 'delivery') {
+        const name = document.getElementById('deliveryName').value;
+        const address = document.getElementById('deliveryAddress').value;
+        const date = document.getElementById('deliveryDate').value;
+        const time = document.getElementById('deliveryTime').value;
+        
+        if (!name || !address) {
+          isValid = false;
+          alert('Harap isi Nama dan Alamat untuk pengiriman!');
+        }
+        
+        // Validasi tambahan: Jika tanggal diisi, waktu wajib diisi
+        if (date && !time) {
+          isValid = false;
+          alert('Harap pilih Waktu Pengiriman jika memilih Tanggal!');
+        }
+        
+        customerInfo = `
+*PENGIRIMAN*
+Nama: ${name}
+Alamat: ${address}
+${date ? `Tanggal: ${date}` : ''}
+${time ? `Waktu: ${time}` : ''}
+`;
+      } else {
+        const name = document.getElementById('reservationName').value;
+        const date = document.getElementById('reservationDate').value;
+        const time = document.getElementById('reservationTime').value;
+        const guests = document.getElementById('reservationGuests').value;
+        const notes = document.getElementById('reservationNotes').value;
+        
+        if (!name || !date || !time || !guests) {
+          isValid = false;
+          alert('Harap isi semua field yang wajib diisi untuk reservasi!');
+        }
+        
+        customerInfo = `
+*RESERVASI*
+Nama: ${name}
+Tanggal: ${date}
+Waktu: ${time}
+Jumlah Tamu: ${guests}
+Catatan: ${notes || '-'}
+`;
       }
-    }
-
-    sayurGrid.addEventListener("click", handleQuantityClick);
-    kerupukGrid.addEventListener("click", handleQuantityClick);
-    toppingGrid.addEventListener("click", handleQuantityClick);
-
-    function kirimWhatsApp() {
-      let pesan = `Halo! Saya ingin pesan Seblak:\n`;
-      pesan += `• Kuah: ${selectedKuah || "-"}\n`;
-      pesan += `• Tipe: ${selectedTipe || "-"}\n`;
-      pesan += `• Level: ${selectedLevel || "-"}\n\n`;
       
-      pesan += `• Sayuran:\n`;
-      sayuran.forEach(item => {
-        const qty = cart[`sayuran_${item.name}`] || 0;
-        if (qty > 0) pesan += `  - ${item.name} x ${qty} (Rp${item.price * qty})\n`;
+      if (!isValid) return;
+      
+      // Prepare order message
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      
+      let orderMessage = `Halo kak dinda! Saya ingin memesan:\n\n`;
+      orderMessage += customerInfo;
+      orderMessage += '\n--------------------------------\n';
+      orderMessage += '*DETAIL PESANAN:*\n';
+      
+      cart.forEach(item => {
+        // Tampilkan pilihan jika ada
+        let itemDetails = `- ${item.name}`;
+        
+        if (item.options) {
+          const optionsText = Object.entries(item.options)
+            .map(([key, value]) => `${key}: ${value}`)
+            .join(', ');
+          itemDetails += ` (${optionsText})`;
+        }
+        
+        itemDetails += ` x ${item.quantity} = Rp${(item.price * item.quantity).toLocaleString()}`;
+        orderMessage += itemDetails + '\n';
       });
       
-      pesan += `\n• Kerupuk:\n`;
-      kerupuk.forEach(item => {
-        const qty = cart[`kerupuk_${item.name}`] || 0;
-        if (qty > 0) pesan += `  - ${item.name} x ${qty} (Rp${item.price * qty})\n`;
-      });
+      orderMessage += '\n--------------------------------\n';
+      orderMessage += `*TOTAL: Rp${total.toLocaleString()}*\n\n`;
+      orderMessage += 'Mohon konfirmasi ketersediaan pesanan. Terima kasih!';
       
-      pesan += `\n• Topping:\n`;
-      toppings.forEach(item => {
-        const qty = cart[`topping_${item.name}`] || 0;
-        if (qty > 0) pesan += `  - ${item.name} x ${qty} (Rp${item.price * qty})\n`;
-      });
+      // Encode for WhatsApp URL
+      const encodedMessage = encodeURIComponent(orderMessage);
+      const whatsappUrl = `https://wa.me/6281391674116?text=${encodedMessage}`;
       
-      pesan += `\n${totalDiv.textContent}`;
-
-      const url = `https://wa.me/6282131472101?text=${encodeURIComponent(pesan)}`;
-      window.open(url, "_blank");
-    }
+      // Open WhatsApp
+      window.open(whatsappUrl, '_blank');
+    });
+    
+    // Set min date for date pickers to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('deliveryDate').min = today;
+    document.getElementById('reservationDate').min = today;
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+      if (e.target === optionModal) {
+        hideOptionModal();
+      }
+    });
   </script>
 </body>
-	</html>
+</html>
