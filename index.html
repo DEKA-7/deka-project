@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DeKa Seblak & Ayam Geprek- Menu & Pemesanan</title>
+  <title>DeKa & Seblak - Menu & Pemesanan</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -125,17 +126,24 @@
       border-left: 4px solid #ffcc00;
     }
     
+    /* Layout menu menyamping */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 15px;
+    }
+    
     .menu-item {
       background: rgba(0, 0, 0, 0.2);
       border-radius: 10px;
       padding: 15px;
-      margin-bottom: 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       transition: all 0.3s ease;
       border: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
+      cursor: pointer;
     }
     
     .menu-item:hover {
@@ -146,7 +154,6 @@
     
     .item-info {
       flex: 1;
-      padding-right: 40px;
     }
     
     .item-name {
@@ -154,13 +161,9 @@
       font-size: 1.1rem;
       margin-bottom: 5px;
       color: #fff;
-    }
-    
-    .item-desc {
-      font-size: 0.9rem;
-      color: #ddd;
-      margin-bottom: 8px;
-      line-height: 1.4;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     
     .item-price {
@@ -168,8 +171,14 @@
       font-weight: bold;
       font-size: 1.2rem;
       white-space: nowrap;
-      min-width: 70px;
-      text-align: right;
+      margin-left: 10px;
+    }
+    
+    .item-desc {
+      font-size: 0.9rem;
+      color: #ddd;
+      margin-bottom: 8px;
+      line-height: 1.4;
     }
     
     .spicy {
@@ -202,10 +211,11 @@
     .addon-item {
       background: rgba(0, 0, 0, 0.15);
       border-radius: 6px;
-      padding: 8px 35px 8px 8px;
+      padding: 8px;
       font-size: 0.85rem;
       text-align: center;
       position: relative;
+      cursor: pointer;
     }
     
     .addon-name {
@@ -447,81 +457,6 @@
       box-shadow: none;
     }
     
-    .add-to-cart {
-      background: rgba(255, 230, 0, 0.2);
-      border: none;
-      color: var(--accent);
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      right: 15px;
-      bottom: 15px;
-      transition: all 0.2s ease;
-    }
-    
-    .add-to-cart:hover {
-      background: rgba(255, 230, 0, 0.3);
-      transform: scale(1.1);
-    }
-    
-    .addon-add-to-cart {
-      background: rgba(255, 230, 0, 0.2);
-      border: none;
-      color: var(--accent);
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      right: 5px;
-      top: 5px;
-      font-size: 0.9rem;
-      transition: all 0.2s ease;
-    }
-    
-    .addon-add-to-cart:hover {
-      background: rgba(255, 230, 0, 0.3);
-      transform: scale(1.1);
-    }
-    
-    .cart-badge {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: var(--accent);
-      color: var(--dark);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1.2rem;
-      z-index: 100;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .cart-badge:hover {
-      transform: scale(1.1);
-    }
-    
-    .hidden {
-      display: none;
-    }
-    
     /* Modal untuk pilihan tambahan */
     .modal {
       display: none;
@@ -722,14 +657,44 @@
         height: 35px;
         font-size: 1rem;
       }
-      
-      .item-info {
-        padding-right: 35px;
+    }
+    
+    @media (max-width: 480px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
       }
       
-      .modal-title {
+      .section-icon {
         font-size: 1.5rem;
       }
+    }
+    
+    .cart-badge {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: var(--dark);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      z-index: 100;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .cart-badge:hover {
+      transform: scale(1.1);
+    }
+    
+    .hidden {
+      display: none;
     }
   </style>
 </head>
@@ -788,7 +753,7 @@
         </div>
       </div>
       
-      <div id="ambil sendiri" class="hidden">
+      <div id="reservationForm" class="hidden">
         <div class="form-group">
           <label for="reservationName">Nama Pemesan*</label>
           <input type="text" id="reservationName" placeholder="Nama untuk reservasi">
@@ -858,96 +823,111 @@
       </div>
       
       <div class="menu-category">
-        <div class="menu-item hot-item">
-          <div class="item-info">
-            <div class="item-name">Indomie Nyemek Kornet (INK)</div>
+        <div class="menu-grid">
+          <div class="menu-item hot-item" data-id="1" data-name="Indomie Nyemek Kornet (INK)" data-price="15000" data-type="mie">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Indomie Nyemek Kornet (INK)</span>
+                <span class="item-price">15k</span>
+              </div>
+            </div>
           </div>
-          <div class="item-price">15k</div>
-          <button class="add-to-cart" data-id="1" data-name="Indomie Nyemek Kornet (INK)" data-price="15000" data-type="other">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Pentol / Pentol Aci Mercon <span class="spicy">🔥 Pedas</span></div>
+          
+          <div class="menu-item" data-id="2" data-name="Pentol / Pentol Aci Mercon" data-price="12000" data-type="other">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Pentol / Pentol Aci Mercon <span class="spicy">🔥 Pedas</span></span>
+                <span class="item-price">12k</span>
+              </div>
+            </div>
           </div>
-          <div class="item-price">12k</div>
-          <button class="add-to-cart" data-id="2" data-name="Pentol / Pentol Aci Mercon" data-price="12000" data-type="other">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Mie Jebew</div>
+          
+          <div class="menu-item" data-id="3" data-name="Mie Jebew" data-price="10000" data-type="mie">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Mie Jebew</span>
+                <span class="item-price">10k</span>
+              </div>
+            </div>
           </div>
-          <div class="item-price">10k</div>
-          <button class="add-to-cart" data-id="3" data-name="Mie Jebew" data-price="10000" data-type="other">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Ayam Oseng</div>
+          
+          <div class="menu-item" data-id="4" data-name="Ayam Oseng" data-price="12000" data-type="oseng">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Ayam Oseng</span>
+                <span class="item-price">12k</span>
+              </div>
+            </div>
           </div>
-          <div class="item-price">12k</div>
-          <button class="add-to-cart" data-id="4" data-name="Ayam Oseng" data-price="12000" data-type="other">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Ceker Mercon <span class="spicy">🔥 Pedas</span></div>
+          
+          <div class="menu-item" data-id="5" data-name="Ceker Mercon" data-price="12000" data-type="other">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Ceker Mercon <span class="spicy">🔥 Pedas</span></span>
+                <span class="item-price">12k</span>
+              </div>
+            </div>
           </div>
-          <div class="item-price">12k</div>
-          <button class="add-to-cart" data-id="5" data-name="Ceker Mercon" data-price="12000" data-type="other">+</button>
-        </div>
-        
-        <div class="menu-item hot-item">
-          <div class="item-info">
-            <div class="item-name">Ceker Enoki Mercon <span class="spicy">🔥 Pedas</span></div>
+          
+          <div class="menu-item hot-item" data-id="6" data-name="Ceker Enoki Mercon" data-price="16000" data-type="other">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Ceker Enoki Mercon <span class="spicy">🔥 Pedas</span></span>
+                <span class="item-price">16k</span>
+              </div>
+            </div>
           </div>
-          <div class="item-price">16k</div>
-          <button class="add-to-cart" data-id="6" data-name="Ceker Enoki Mercon" data-price="16000" data-type="other">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Rice Bowl Katsu BBQ</div>
+          
+          <div class="menu-item" data-id="7" data-name="Rice Bowl Katsu BBQ" data-price="12000" data-type="other">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Rice Bowl Katsu BBQ</span>
+                <span class="item-price">12k</span>
+              </div>
+            </div>
           </div>
-          <div class="item-price">12k</div>
-          <button class="add-to-cart" data-id="7" data-name="Rice Bowl Katsu BBQ" data-price="12000" data-type="other">+</button>
         </div>
       </div>
       
       <h3 class="category-title">Menu Lain</h3>
       
       <div class="menu-category">
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Oseng Tempura Mix</div>
+        <div class="menu-grid">
+          <div class="menu-item" data-id="8" data-name="Oseng Tempura Mix" data-price="12000" data-type="oseng">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Oseng Tempura Mix</span>
+                <span class="item-price">12k</span>
+              </div>
+            </div>
           </div>
-          <div class="item-price">12k</div>
-          <button class="add-to-cart" data-id="8" data-name="Oseng Tempura Mix" data-price="12000" data-type="other">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Tempura Goreng Mix</div>
+          
+          <div class="menu-item" data-id="9" data-name="Tempura Goreng Mix" data-price="12000" data-type="other">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Tempura Goreng Mix</span>
+                <span class="item-price">12k</span>
+              </div>
+            </div>
           </div>
-          <div class="item-price">12k</div>
-          <button class="add-to-cart" data-id="9" data-name="Tempura Goreng Mix" data-price="12000" data-type="other">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Tahu Bakso</div>
+          
+          <div class="menu-item" data-id="10" data-name="Tahu Bakso" data-price="10000" data-type="other">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Tahu Bakso</span>
+                <span class="item-price">10k</span>
+              </div>
+            </div>
           </div>
-          <div class="item-price">10k</div>
-          <button class="add-to-cart" data-id="10" data-name="Tahu Bakso" data-price="10000" data-type="other">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Kentang Goreng</div>
+          
+          <div class="menu-item" data-id="11" data-name="Kentang Goreng" data-price="12000" data-type="other">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Kentang Goreng</span>
+                <span class="item-price">12k</span>
+              </div>
+            </div>
           </div>
-          <div class="item-price">12k</div>
-          <button class="add-to-cart" data-id="11" data-name="Kentang Goreng" data-price="12000" data-type="other">+</button>
         </div>
       </div>
     </section>
@@ -960,49 +940,56 @@
       </div>
       
       <div class="menu-category">
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Seblak Original</div>
-            <div class="item-desc">Kerupuk, pentol, sosis, sayuran, telur, mie</div>
+        <div class="menu-grid">
+          <div class="menu-item" data-id="12" data-name="Seblak Original" data-price="12000" data-type="seblak">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Seblak Original</span>
+                <span class="item-price">12k</span>
+              </div>
+              <div class="item-desc">Kerupuk, pentol, sosis, sayuran, telur, mie</div>
+            </div>
           </div>
-          <div class="item-price">12k</div>
-          <button class="add-to-cart" data-id="12" data-name="Seblak Original" data-price="12000" data-type="seblak">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Seblak Jumbo</div>
-            <div class="item-desc">Seblak ori + sosis pentol double + topoki + somay</div>
+          
+          <div class="menu-item" data-id="13" data-name="Seblak Jumbo" data-price="16000" data-type="seblak">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Seblak Jumbo</span>
+                <span class="item-price">16k</span>
+              </div>
+              <div class="item-desc">Seblak ori + sosis pentol double + topoki + somay</div>
+            </div>
           </div>
-          <div class="item-price">16k</div>
-          <button class="add-to-cart" data-id="13" data-name="Seblak Jumbo" data-price="16000" data-type="seblak">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Seblak Cuanki</div>
-            <div class="item-desc">Seblak ori + pentol aci + cuanki lidah + cuanki tahu + somay kering + pilus</div>
+          
+          <div class="menu-item" data-id="14" data-name="Seblak Cuanki" data-price="22000" data-type="seblak">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Seblak Cuanki</span>
+                <span class="item-price">22k</span>
+              </div>
+              <div class="item-desc">Seblak ori + pentol aci + cuanki lidah + cuanki tahu + somay kering + pilus</div>
+            </div>
           </div>
-          <div class="item-price">22k</div>
-          <button class="add-to-cart" data-id="14" data-name="Seblak Cuanki" data-price="22000" data-type="seblak">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Seblak Mix Suki</div>
-            <div class="item-desc">Seblak ori + dumpling keju + chikuwa + crabstick + siomay + bola ikan + topoki</div>
+          
+          <div class="menu-item" data-id="15" data-name="Seblak Mix Suki" data-price="25000" data-type="seblak">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Seblak Mix Suki</span>
+                <span class="item-price">25k</span>
+              </div>
+              <div class="item-desc">Seblak ori + dumpling keju + chikuwa + crabstick + siomay + bola ikan + topoki</div>
+            </div>
           </div>
-          <div class="item-price">25k</div>
-          <button class="add-to-cart" data-id="15" data-name="Seblak Mix Suki" data-price="25000" data-type="seblak">+</button>
-        </div>
-        
-        <div class="menu-item hot-item">
-          <div class="item-info">
-            <div class="item-name">Seblak Komplit <span class="spicy">🔥 Pedas Level 1-7</span></div>
-            <div class="item-desc">Seblak ori + dumpling keju + bola ikan + bola salmon + bola lobster + pentol aci + kembang cumi + ceker + jamur enoki</div>
+          
+          <div class="menu-item hot-item" data-id="16" data-name="Seblak Komplit" data-price="35000" data-type="seblak">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Seblak Komplit <span class="spicy">🔥 Pedas Level 1-7</span></span>
+                <span class="item-price">35k</span>
+              </div>
+              <div class="item-desc">Seblak ori + dumpling keju + bola ikan + bola salmon + bola lobster + pentol aci + kembang cumi + ceker + jamur enoki</div>
+            </div>
           </div>
-          <div class="item-price">35k</div>
-          <button class="add-to-cart" data-id="16" data-name="Seblak Komplit" data-price="35000" data-type="seblak">+</button>
         </div>
       </div>
     </section>
@@ -1015,58 +1002,66 @@
       </div>
       
       <div class="menu-category">
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Nasi Geprek Sayap / Paha Bawah</div>
-            <div class="item-desc">Nasi + ayam + sambal + timun + tempe</div>
+        <div class="menu-grid">
+          <div class="menu-item" data-id="17" data-name="Nasi Geprek Sayap/Paha Bawah" data-price="10000" data-type="geprek">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Nasi Geprek Sayap / Paha Bawah</span>
+                <span class="item-price">10k</span>
+              </div>
+              <div class="item-desc">Nasi + ayam + sambal + timun + tempe</div>
+            </div>
           </div>
-          <div class="item-price">10k</div>
-          <button class="add-to-cart" data-id="17" data-name="Nasi Geprek Sayap/Paha Bawah" data-price="10000" data-type="geprek">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Nasi Geprek Dada / Paha Atas</div>
-            <div class="item-desc">Nasi + ayam + sambal + timun + tempe</div>
+          
+          <div class="menu-item" data-id="18" data-name="Nasi Geprek Dada/Paha Atas" data-price="12000" data-type="geprek">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Nasi Geprek Dada / Paha Atas</span>
+                <span class="item-price">12k</span>
+              </div>
+              <div class="item-desc">Nasi + ayam + sambal + timun + tempe</div>
+            </div>
           </div>
-          <div class="item-price">12k</div>
-          <button class="add-to-cart" data-id="18" data-name="Nasi Geprek Dada/Paha Atas" data-price="12000" data-type="geprek">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Nasi Telur</div>
-            <div class="item-desc">Nasi + telur + sambal + timun + tempe</div>
+          
+          <div class="menu-item" data-id="19" data-name="Nasi Telur" data-price="10000" data-type="geprek">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Nasi Telur</span>
+                <span class="item-price">10k</span>
+              </div>
+              <div class="item-desc">Nasi + telur + sambal + timun + tempe</div>
+            </div>
           </div>
-          <div class="item-price">10k</div>
-          <button class="add-to-cart" data-id="19" data-name="Nasi Telur" data-price="10000" data-type="geprek">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Nasi Nugget</div>
-            <div class="item-desc">Nasi + Nugget 7 biji + sambal + timun + tempe</div>
+          
+          <div class="menu-item" data-id="20" data-name="Nasi Nugget" data-price="12000" data-type="geprek">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Nasi Nugget</span>
+                <span class="item-price">12k</span>
+              </div>
+              <div class="item-desc">Nasi + Nugget 7 biji + sambal + timun + tempe</div>
+            </div>
           </div>
-          <div class="item-price">12k</div>
-          <button class="add-to-cart" data-id="20" data-name="Nasi Nugget" data-price="12000" data-type="geprek">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Geprek Mantap Sayap / Paha Bawah</div>
-            <div class="item-desc">Nasi + ayam + telur + tempe + timun + sambal</div>
+          
+          <div class="menu-item" data-id="21" data-name="Geprek Mantap Sayap/Paha Bawah" data-price="13000" data-type="geprek">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Geprek Mantap Sayap / Paha Bawah</span>
+                <span class="item-price">13k</span>
+              </div>
+              <div class="item-desc">Nasi + ayam + telur + tempe + timun + sambal</div>
+            </div>
           </div>
-          <div class="item-price">13k</div>
-          <button class="add-to-cart" data-id="21" data-name="Geprek Mantap Sayap/Paha Bawah" data-price="13000" data-type="geprek">+</button>
-        </div>
-        
-        <div class="menu-item">
-          <div class="item-info">
-            <div class="item-name">Geprek Mantap Dada / Paha Atas</div>
-            <div class="item-desc">Nasi + ayam + telur + tempe + timun + sambal</div>
+          
+          <div class="menu-item" data-id="22" data-name="Geprek Mantap Dada/Paha Atas" data-price="15000" data-type="geprek">
+            <div class="item-info">
+              <div class="item-name">
+                <span>Geprek Mantap Dada / Paha Atas</span>
+                <span class="item-price">15k</span>
+              </div>
+              <div class="item-desc">Nasi + ayam + telur + tempe + timun + sambal</div>
+            </div>
           </div>
-          <div class="item-price">15k</div>
-          <button class="add-to-cart" data-id="22" data-name="Geprek Mantap Dada/Paha Atas" data-price="15000" data-type="geprek">+</button>
         </div>
       </div>
       
@@ -1074,40 +1069,39 @@
       
       <div class="item-addon">
         <div class="addon-grid">
-          <div class="addon-item">
+          <div class="addon-item" data-id="23" data-name="Nasi" data-price="3000" data-type="addon">
             <div class="addon-name">Nasi</div>
             <div class="addon-price">3k</div>
-            <button class="addon-add-to-cart" data-id="23" data-name="Nasi" data-price="3000">+</button>
           </div>
-          <div class="addon-item">
+          
+          <div class="addon-item" data-id="24" data-name="Telur" data-price="3000" data-type="addon">
             <div class="addon-name">Telur</div>
             <div class="addon-price">3k</div>
-            <button class="addon-add-to-cart" data-id="24" data-name="Telur" data-price="3000">+</button>
           </div>
-          <div class="addon-item">
+          
+          <div class="addon-item" data-id="25" data-name="Dada/Paha Atas" data-price="10000" data-type="addon">
             <div class="addon-name">Dada / Paha Atas</div>
             <div class="addon-price">10k</div>
-            <button class="addon-add-to-cart" data-id="25" data-name="Dada/Paha Atas" data-price="10000">+</button>
           </div>
-          <div class="addon-item">
+          
+          <div class="addon-item" data-id="26" data-name="Sayap/Paha Bawah" data-price="8000" data-type="addon">
             <div class="addon-name">Sayap / Paha Bawah</div>
             <div class="addon-price">8k</div>
-            <button class="addon-add-to-cart" data-id="26" data-name="Sayap/Paha Bawah" data-price="8000">+</button>
           </div>
-          <div class="addon-item">
+          
+          <div class="addon-item" data-id="27" data-name="Nugget" data-price="1000" data-type="addon">
             <div class="addon-name">Nugget</div>
             <div class="addon-price">1k/biji</div>
-            <button class="addon-add-to-cart" data-id="27" data-name="Nugget" data-price="1000">+</button>
           </div>
-          <div class="addon-item">
+          
+          <div class="addon-item" data-id="28" data-name="Sambal" data-price="3000" data-type="addon">
             <div class="addon-name">Sambal</div>
             <div class="addon-price">3k</div>
-            <button class="addon-add-to-cart" data-id="28" data-name="Sambal" data-price="3000">+</button>
           </div>
-          <div class="addon-item">
+          
+          <div class="addon-item" data-id="29" data-name="Tempe" data-price="1000" data-type="addon">
             <div class="addon-name">Tempe</div>
             <div class="addon-price">1k</div>
-            <button class="addon-add-to-cart" data-id="29" data-name="Tempe" data-price="1000">+</button>
           </div>
         </div>
       </div>
@@ -1115,13 +1109,13 @@
     
     <div class="delivery-info">
       <h3>📦 Delivery Order Available</h3>
-      <p>Pesanan diantar ke alamat Anda! Minimal order Rp 25.000 (wilayah terdekat)</p>
-      <p>Jam Operasional: Setiap Hari 13:00 - 23:00</p>
+      <p>Pesanan diantar ke alamat Anda! Minimal order Rp 50.000 (wilayah terdekat)</p>
+      <p>Jam Operasional: Setiap Hari 10:00 - 22:00</p>
     </div>
  
     <footer>
-      <p>DeKa Seblak & Ayam Geprek &copy; 2023 | Buka Setiap Hari 13:00 - 23:00</p>
-      <p>Jl. Raya Lontar No 208, surabaya | Telp: (081) 391674116</p>
+      <p>DeKa & Seblak &copy; 2023 | Buka Setiap Hari 10:00 - 22:00</p>
+      <p>Jl. Kuliner No. 123, Kota Bandung | Telp: (022) 123-4567</p>
     </footer>
   </div>
   
@@ -1160,14 +1154,13 @@
     const tabs = document.querySelectorAll('.tab');
     const deliveryForm = document.getElementById('deliveryForm');
     const reservationForm = document.getElementById('reservationForm');
-    const addToCartButtons = document.querySelectorAll('.add-to-cart, .addon-add-to-cart');
+    const notification = document.getElementById('notification');
     const optionModal = document.getElementById('optionModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalSubtitle = document.getElementById('modalSubtitle');
     const modalBody = document.getElementById('modalBody');
     const confirmOptionBtn = document.getElementById('confirmOption');
     const cancelOptionBtn = document.getElementById('cancelOption');
-    const notification = document.getElementById('notification');
     
     // Tab switching
     tabs.forEach(tab => {
@@ -1289,8 +1282,8 @@
           </div>
         `;
       } 
-      else {
-        // Pilihan untuk menu lain: Level pedas
+      else if (item.type === 'mie' || item.type === 'oseng') {
+        // Pilihan untuk mie dan oseng: Level pedas
         modalBody.innerHTML = `
           <div class="option-group">
             <div class="option-title">Level Pedas</div>
@@ -1298,14 +1291,14 @@
               <div class="option-item" data-value="tidak pedas">
                 <div class="option-name">Tidak Pedas</div>
               </div>
+              <div class="option-item" data-value="pedas dikit">
+                <div class="option-name">Pedas Dikit</div>
+              </div>
               <div class="option-item" data-value="sedang">
                 <div class="option-name">Sedang</div>
               </div>
               <div class="option-item" data-value="pedas">
                 <div class="option-name">Pedas</div>
-              </div>
-              <div class="option-item" data-value="sangat pedas">
-                <div class="option-name">Sangat Pedas</div>
               </div>
             </div>
           </div>
@@ -1369,12 +1362,6 @@
         }
       });
       
-      // Jika ada pilihan yang belum dipilih
-      if (Object.keys(selectedOptions).length < optionGroups.length) {
-        alert('Harap pilih semua opsi yang tersedia');
-        return;
-      }
-      
       // Hitung harga akhir
       const finalPrice = selectedItem.price + extraPrice;
       
@@ -1405,15 +1392,15 @@
     cancelOptionBtn.addEventListener('click', hideOptionModal);
     
     // Add to cart functionality
-    addToCartButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const id = button.dataset.id;
-        const name = button.dataset.name;
-        const price = parseInt(button.dataset.price);
-        const type = button.dataset.type || 'other'; // Default 'other'
+    document.querySelectorAll('.menu-item, .addon-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const id = this.dataset.id;
+        const name = this.dataset.name;
+        const price = parseInt(this.dataset.price);
+        const type = this.dataset.type || 'other';
         
         // Untuk addon, langsung tambahkan ke keranjang tanpa modal
-        if (button.classList.contains('addon-add-to-cart')) {
+        if (type === 'addon') {
           const existingItem = cart.find(item => 
             item.id === id && 
             Object.keys(item.options || {}).length === 0
@@ -1435,11 +1422,31 @@
           return;
         }
         
-        // Untuk menu dengan pilihan khusus, tampilkan modal
-        if (type === 'seblak' || type === 'geprek' || type === 'other') {
+        // Untuk menu yang memerlukan pilihan khusus, tampilkan modal
+        if (type === 'seblak' || type === 'geprek' || type === 'mie' || type === 'oseng') {
           showOptionModal({ id, name, price, type });
           return;
         }
+        
+        // Untuk item lainnya langsung tambahkan ke keranjang
+        const existingItem = cart.find(item => 
+          item.id === id && 
+          Object.keys(item.options || {}).length === 0
+        );
+        
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({
+            id,
+            name,
+            price,
+            quantity: 1
+          });
+        }
+        
+        updateCartUI();
+        showNotification(`${name} telah ditambahkan ke keranjang!`);
       });
     });
     
